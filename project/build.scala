@@ -27,7 +27,7 @@ object MyBuild extends Build {
       scalacOptions := Seq("-deprecation", "-language:postfixOps"),
       libraryDependencies ++= Seq(
         "org.eclipse.jgit" % "org.eclipse.jgit.http.server" % "3.0.0.201306101825-r",
-        "org.scalatra" %% "scalatra" % ScalatraVersion,
+        "org.scalatra" %% "scalatra" % ScalatraVersion exclude("org.slf4j", "slf4j-jdk14"),
         "org.scalatra" %% "scalatra-specs2" % ScalatraVersion % "test",
         "org.scalatra" %% "scalatra-json" % ScalatraVersion,
         "org.json4s" %% "json4s-jackson" % "3.2.5",
@@ -37,7 +37,7 @@ object MyBuild extends Build {
         "org.apache.commons" % "commons-compress" % "1.5",
         "org.apache.commons" % "commons-email" % "1.3.1",
         "org.apache.httpcomponents" % "httpclient" % "4.3",
-        "org.apache.sshd" % "apache-sshd" % "0.11.0",
+        "org.apache.sshd" % "apache-sshd" % "0.11.0" exclude("org.slf4j", "slf4j-jdk14"),
         "com.typesafe.slick" %% "slick" % "1.0.1",
         "com.novell.ldap" % "jldap" % "2009-10-07",
         "com.h2database" % "h2" % "1.3.173",
@@ -47,7 +47,7 @@ object MyBuild extends Build {
         "junit" % "junit" % "4.11" % "test"
       ),
       EclipseKeys.withSource := true,
-      javacOptions in compile ++= Seq("-target", "6", "-source", "6"),
+      javacOptions in compile ++= Seq("-target", "6", "-source", "6", "-bootclasspath", "/usr/lib/jvm/jre-1.7.0-openjdk.x86_64/lib/rt.jar"),
       testOptions in Test += Tests.Argument(TestFrameworks.Specs2, "junitxml", "console"),
       packageOptions += Package.MainClass("JettyLauncher")
     ) ++ seq(Twirl.settings: _*)
